@@ -76,7 +76,7 @@ function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-teal-500 text-sm font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-yellow-400 text-sm font-bold text-white">
               O
             </div>
             <span className="text-lg font-bold text-gray-900">OrganizeMe</span>
@@ -97,7 +97,7 @@ function Home() {
           </div>
           <a
             href="#cta"
-            className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-indigo-700 hover:shadow-md"
+            className="rounded-full bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md"
           >
             Get Started
           </a>
@@ -105,19 +105,19 @@ function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-indigo-50/40 to-white pt-32 pb-20 sm:pt-40 sm:pb-28">
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/40 to-white pt-32 pb-20 sm:pt-40 sm:pb-28">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0" />
-        <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-indigo-400/10 blur-3xl" />
+        <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-blue-400/10 blur-3xl" />
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-4 py-1.5 text-sm font-medium text-indigo-700">
-              <span className="flex h-2 w-2 rounded-full bg-indigo-500" />
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
+              <span className="flex h-2 w-2 rounded-full bg-blue-500" />
               Your apps, beautifully organized
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
               Your phone.
               <br />
-              <span className="bg-gradient-to-r from-indigo-600 to-teal-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-600 to-yellow-400 bg-clip-text text-transparent">
                 Finally organized.
               </span>
             </h1>
@@ -128,7 +128,7 @@ function Home() {
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <a
                 href="#cta"
-                className="inline-flex w-full items-center justify-center rounded-full bg-indigo-600 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-indigo-700 hover:shadow-md sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-full bg-blue-600 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md sm:w-auto"
               >
                 Start Organizing Free
               </a>
@@ -142,7 +142,7 @@ function Home() {
           </div>
           <div className="mt-16 flex justify-center">
             <div className="relative">
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-indigo-500/20 to-teal-500/20 blur-xl" />
+              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-blue-500/20 to-yellow-500/20 blur-xl" />
               <img
                 src="/images/hero-mockup.png"
                 alt="OrganizeMe app showing organized app directory"
@@ -188,7 +188,7 @@ function Home() {
                 }`}
               >
                 <div className="flex-1">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
                     <span className="text-lg font-bold">{index + 1}</span>
                   </div>
                   <h3 className="mt-4 text-2xl font-bold text-gray-900">
@@ -200,7 +200,7 @@ function Home() {
                 </div>
                 <div className="flex-1">
                   <div className="relative mx-auto max-w-[260px]">
-                    <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-indigo-100 to-teal-100 opacity-60" />
+                    <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-blue-100 to-yellow-100 opacity-60" />
                     <img
                       src={feature.image}
                       alt={feature.imageAlt}
@@ -231,13 +231,13 @@ function Home() {
                 key={tier.name}
                 className={`relative rounded-2xl border p-8 shadow-sm ${
                   tier.highlighted
-                    ? "border-indigo-200 bg-white shadow-indigo-100/50 ring-2 ring-indigo-600"
+                    ? "border-blue-200 bg-white shadow-blue-100/50 ring-2 ring-blue-600"
                     : "border-gray-200 bg-white"
                 }`}
               >
                 {tier.highlighted && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center rounded-full bg-indigo-600 px-4 py-1 text-xs font-semibold text-white">
+                    <span className="inline-flex items-center rounded-full bg-blue-600 px-4 py-1 text-xs font-semibold text-white">
                       Most Popular
                     </span>
                   </div>
@@ -259,7 +259,7 @@ function Home() {
                     <li key={feature} className="flex items-start gap-3">
                       <svg
                         className={`h-5 w-5 flex-shrink-0 ${
-                          tier.highlighted ? "text-indigo-600" : "text-teal-500"
+                          tier.highlighted ? "text-blue-600" : "text-yellow-500"
                         }`}
                         fill="none"
                         viewBox="0 0 24 24"
@@ -281,8 +281,8 @@ function Home() {
                     href="#cta"
                     className={`flex w-full items-center justify-center rounded-full px-6 py-3 text-base font-semibold shadow-sm transition-all ${
                       tier.highlighted
-                        ? "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md"
-                        : "border border-indigo-200 bg-white text-indigo-700 hover:bg-indigo-50"
+                        ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md"
+                        : "border border-blue-200 bg-white text-blue-700 hover:bg-blue-50"
                     }`}
                   >
                     {tier.cta}
@@ -297,34 +297,34 @@ function Home() {
       {/* CTA Section */}
       <section
         id="cta"
-        className="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-indigo-800 py-20 sm:py-28"
+        className="relative overflow-hidden bg-gradient-to-br from-blue-600 to-blue-800 py-20 sm:py-28"
       >
-        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-indigo-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-teal-400/15 blur-3xl" />
+        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-blue-400/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-yellow-400/15 blur-3xl" />
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Ready to organize your phone?
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-indigo-100">
+            <p className="mt-4 text-lg leading-relaxed text-blue-100">
               Join thousands of users who have transformed their cluttered home
               screens into beautiful, organized app directories.
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <a
                 href="#"
-                className="inline-flex w-full items-center justify-center rounded-full bg-white px-8 py-3.5 text-base font-semibold text-indigo-700 shadow-sm transition-all hover:bg-indigo-50 hover:shadow-md sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-full bg-white px-8 py-3.5 text-base font-semibold text-blue-700 shadow-sm transition-all hover:bg-blue-50 hover:shadow-md sm:w-auto"
               >
                 Download for iOS
               </a>
               <a
                 href="#"
-                className="inline-flex w-full items-center justify-center rounded-full border border-indigo-400 bg-indigo-500/20 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-indigo-500/30 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-full border border-blue-400 bg-blue-500/20 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-blue-500/30 sm:w-auto"
               >
                 Download for Android
               </a>
             </div>
-            <p className="mt-6 text-sm text-indigo-200">
+            <p className="mt-6 text-sm text-blue-200">
               Free to start. No credit card required.
             </p>
           </div>
@@ -336,7 +336,7 @@ function Home() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-teal-500 text-xs font-bold text-white">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-yellow-400 text-xs font-bold text-white">
                 O
               </div>
               <span className="text-sm font-semibold text-gray-900">OrganizeMe</span>

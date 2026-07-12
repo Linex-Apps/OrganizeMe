@@ -19,7 +19,7 @@ export const Route = createRootRoute({
         content:
           "Turn your cluttered home screen into a personalized app directory. Find every app in seconds with OrganizeMe.",
       },
-      { name: "theme-color", content: "#4338ca" },
+      { name: "theme-color", content: "#2563eb" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
