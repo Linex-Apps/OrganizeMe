@@ -44,6 +44,8 @@ dependencies:
 
   # Path provider for Hive file storage
   path_provider: ^2.1.3
+  # Stripe payments for premium subscriptions
+  flutter_stripe: ^10.1.1
 
 dev_dependencies:
   flutter_test:

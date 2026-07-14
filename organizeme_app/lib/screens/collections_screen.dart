@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
 import '../models/collection.dart';
 import 'collection_detail_screen.dart';
+import 'premium_upsell_screen.dart';
 
 class CollectionsScreen extends StatefulWidget {
   const CollectionsScreen({super.key});
@@ -175,6 +176,10 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
   }
 
   void _showCreateCollectionDialog(BuildContext context, AppProvider provider) {
+    if (!provider.canCreateCollection) {
+      showPremiumUpsell(context);
+      return;
+    }
     final controller = TextEditingController();
     showDialog(
       context: context,

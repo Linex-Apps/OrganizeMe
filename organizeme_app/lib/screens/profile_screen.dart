@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
+import 'premium_upsell_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -101,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // TODO: Show premium upsell
+                          showPremiumUpsell(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFEAB308),
