@@ -6,32 +6,32 @@ export const Route = createFileRoute("/")({
 
 const FEATURES = [
   {
-    title: "Auto App Scanning",
+    title: "Dashboard Overview",
     description:
-      "OrganizeMe scans your phone and automatically detects every app you have installed — no manual entry needed.",
-    image: "/images/feature-scanning.png",
-    imageAlt: "App scanning interface showing detected apps",
+      "Your home screen, beautifully organized. See your favorites, app categories, collections, and recently used apps all in one place.",
+    image: "/images/feature-dashboard.png",
+    imageAlt: "Dashboard screen showing organized app overview",
   },
   {
     title: "Smart Categories",
     description:
-      "Apps are intelligently sorted into categories like Social, Productivity, Entertainment, Finance, and more.",
-    image: "/images/feature-categories.png",
+      "Apps are intelligently sorted into categories like Social, Productivity, Entertainment, Finance, and more. Each with color-coded icons.",
+    image: "/images/feature-categories-new.png",
     imageAlt: "Smart categories view showing organized apps",
+  },
+  {
+    title: "Instant Search",
+    description:
+      "Can't find an app? Just type. Search across all your apps instantly — no more swiping through pages.",
+    image: "/images/feature-search-new.png",
+    imageAlt: "Search interface showing fast app lookup",
   },
   {
     title: "Custom Collections",
     description:
       "Create your own collections for any purpose — Work Tools, Travel Essentials, Weekend Fun, you name it.",
-    image: "/images/feature-collections.png",
+    image: "/images/feature-collections-new.png",
     imageAlt: "Custom collections feature showing user-created app groups",
-  },
-  {
-    title: "Lightning-Fast Search",
-    description:
-      "Can't find an app? Just type. Search across all your apps instantly — no more swiping through pages.",
-    image: "/images/hero-mockup.png",
-    imageAlt: "Search interface showing fast app lookup",
   },
 ];
 
@@ -144,8 +144,8 @@ function Home() {
             <div className="relative">
               <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-blue-500/20 to-yellow-500/20 blur-xl" />
               <img
-                src="/images/hero-mockup.png"
-                alt="OrganizeMe app showing organized app directory"
+                src="/images/hero-phone.png"
+                alt="OrganizeMe app showing organized app directory on iPhone"
                 className="relative w-full max-w-[280px] rounded-2xl shadow-2xl ring-1 ring-gray-900/10 sm:max-w-[320px]"
               />
             </div>
