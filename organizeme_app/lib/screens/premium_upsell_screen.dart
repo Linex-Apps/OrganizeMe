@@ -16,7 +16,6 @@ class _PremiumUpsellSheetState extends State<PremiumUpsellSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(

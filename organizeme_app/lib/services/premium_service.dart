@@ -1,5 +1,3 @@
-import 'stripe_config.dart';
-
 /// Manages premium subscription state and payment flows.
 ///
 /// In the MVP, this uses Hive-based local state to track whether the user
