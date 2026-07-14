@@ -87,7 +87,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 // Favorites section
                 if (provider.favorites.isNotEmpty) ...[
-                  _buildSectionHeader(context, '⭐ Favorites', () {}),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '⭐ Favorites (${provider.favorites.length})',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF1E293B),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const _FavoritesView(),
+                          ),
+                        ),
+                        child: const Text('See all'),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 8),
                   _buildHorizontalAppList(context, provider.favorites.take(8).toList()),
                   const SizedBox(height: 24),
@@ -388,5 +409,84 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case 'Work': return Icons.work_rounded;
       default: return Icons.apps_rounded;
     }
+  }
+}
+
+/// Full-screen view of all favorites.
+class _FavoritesView extends StatelessWidget {
+  const _FavoritesView();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
+      appBar: AppBar(
+        title: const Text('Favorites'),
+        backgroundColor: theme.colorScheme.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: Consumer<AppProvider>(
+        builder: (context, provider, _) {
+          final favorites = provider.favorites;
+          if (favorites.isEmpty) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.star_border, size: 80, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text('No favorites yet',
+                      style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  SizedBox(height: 8),
+                  Text('Tap the star icon to favorite an app',
+                      style: TextStyle(color: Colors.grey)),
+                ],
+              ),
+            );
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: favorites.length,
+            itemBuilder: (context, index) {
+              final app = favorites[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: ListTile(
+                  leading: Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Text(
+                        app.name[0].toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ),
+                  title: Text(app.name,
+                      style: const TextStyle(fontWeight: FontWeight.w500)),
+                  subtitle: Text(app.category,
+                      style: TextStyle(color: Colors.grey.shade500, fontSize: 12)),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.star, color: Color(0xFFEAB308)),
+                    onPressed: () =>
+                        provider.toggleFavorite(app.packageName),
+                  ),
+                  onTap: () => provider.markAsOpened(app.packageName),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }

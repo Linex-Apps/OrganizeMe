@@ -101,11 +101,21 @@ class AppProvider extends ChangeNotifier {
   int get collectionCount => _storageService.getCollectionCount();
   bool get canCreateCollection => collectionCount < 3; // Free tier limit
 
-  Future<void> createCollection(String name) async {
+  Future<void> createCollection(String name, {int color = 0xFF2563EB}) async {
     if (collectionCount >= 3) return; // Premium upsell
-    final collection = AppCollection(name: name);
+    final collection = AppCollection(name: name, color: color);
     await _storageService.saveCollection(collection);
     notifyListeners();
+  }
+
+  Future<void> updateCollectionColor(String name, int color) async {
+    final collections = _storageService.getAllCollections();
+    final idx = collections.indexWhere((c) => c.name == name);
+    if (idx >= 0) {
+      collections[idx].color = color;
+      await _storageService.saveCollection(collections[idx]);
+      notifyListeners();
+    }
   }
 
   Future<void> addToCollection(String collectionName, String appId) async {

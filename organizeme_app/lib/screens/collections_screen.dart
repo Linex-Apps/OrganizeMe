@@ -57,28 +57,8 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
           }
           return Column(
             children: [
-              if (provider.collectionCount >= 3)
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(12),
-                  color: const Color(0xFFFEF3C7),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.stars_rounded,
-                          color: Color(0xFFEAB308), size: 20),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Upgrade to Premium for unlimited collections!',
-                          style: TextStyle(
-                            color: Colors.orange.shade800,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              if (!provider.canCreateCollection)
+                _buildPremiumBanner(context),
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(16),
@@ -88,13 +68,37 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                       return _buildCreateCard(context, provider);
                     }
                     final collection = collections[index - 1];
-                    return _buildCollectionCard(context, collection, provider);
+                    return _buildCollectionCard(context, collection, provider, theme);
                   },
                 ),
               ),
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildPremiumBanner(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      color: const Color(0xFFFEF3C7),
+      child: Row(
+        children: [
+          const Icon(Icons.stars_rounded, color: Color(0xFFEAB308), size: 20),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Upgrade to Premium for unlimited collections!',
+              style: TextStyle(color: Colors.orange.shade800, fontSize: 13),
+            ),
+          ),
+          TextButton(
+            onPressed: () => _showPremiumUpsell(context),
+            child: const Text('Upgrade', style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ],
       ),
     );
   }
@@ -107,10 +111,18 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            color: provider.canCreateCollection
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
+                : Colors.amber.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(Icons.add, color: Color(0xFF2563EB), size: 28),
+          child: Icon(
+            provider.canCreateCollection ? Icons.add : Icons.stars_rounded,
+            color: provider.canCreateCollection
+                ? const Color(0xFF2563EB)
+                : const Color(0xFFEAB308),
+            size: 28,
+          ),
         ),
         title: Text(
           provider.canCreateCollection
@@ -125,13 +137,19 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
         trailing: provider.canCreateCollection
             ? const Icon(Icons.chevron_right)
             : const Icon(Icons.stars_rounded, color: Color(0xFFEAB308)),
-        onTap: () => _showCreateCollectionDialog(context, provider),
+        onTap: () {
+          if (provider.canCreateCollection) {
+            _showCreateCollectionDialog(context, provider);
+          } else {
+            _showPremiumUpsell(context);
+          }
+        },
       ),
     );
   }
 
   Widget _buildCollectionCard(
-      BuildContext context, AppCollection collection, AppProvider provider) {
+      BuildContext context, AppCollection collection, AppProvider provider, ThemeData theme) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
@@ -140,11 +158,11 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            color: Color(collection.color).withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(Icons.folder_rounded,
-              color: Theme.of(context).colorScheme.primary, size: 28),
+              color: Color(collection.color), size: 28),
         ),
         title: Text(
           collection.name,
@@ -175,34 +193,134 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
   }
 
   void _showCreateCollectionDialog(BuildContext context, AppProvider provider) {
-    final controller = TextEditingController();
+    final nameController = TextEditingController();
+    int selectedColor = AppCollection.availableColors[0];
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Create Collection'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Collection name',
-            border: OutlineInputBorder(),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text('Create Collection'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                autofocus: true,
+                decoration: const InputDecoration(
+                  hintText: 'Collection name',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.folder_rounded),
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Choose color:', style: TextStyle(fontSize: 14)),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: AppCollection.availableColors.map((color) {
+                  final isSelected = color == selectedColor;
+                  return GestureDetector(
+                    onTap: () => setDialogState(() => selectedColor = color),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Color(color),
+                        borderRadius: BorderRadius.circular(10),
+                        border: isSelected
+                            ? Border.all(color: Colors.black, width: 2.5)
+                            : null,
+                        boxShadow: isSelected
+                            ? [BoxShadow(
+                                color: Color(color).withValues(alpha: 0.4),
+                                blurRadius: 8,
+                              )]
+                            : null,
+                      ),
+                      child: isSelected
+                          ? const Icon(Icons.check, color: Colors.white, size: 20)
+                          : null,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (nameController.text.trim().isNotEmpty) {
+                  provider.createCollection(
+                    nameController.text.trim(),
+                    color: selectedColor,
+                  );
+                  Navigator.pop(ctx);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(selectedColor),
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Create'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showPremiumUpsell(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.stars_rounded, size: 56, color: Color(0xFFEAB308)),
+              const SizedBox(height: 16),
+              const Text(
+                'Upgrade to Premium',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              const _PremiumFeature(text: 'Unlimited collections'),
+              const _PremiumFeature(text: 'Custom icons & themes'),
+              const _PremiumFeature(text: 'Cloud backup & sync'),
+              const _PremiumFeature(text: 'Advanced usage stats'),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFEAB308),
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text(
+                    'Upgrade for \$2.99/month',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Maybe later'),
+              ),
+            ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (controller.text.trim().isNotEmpty) {
-                provider.createCollection(controller.text.trim());
-                Navigator.pop(ctx);
-              }
-            },
-            child: const Text('Create'),
-          ),
-        ],
       ),
     );
   }
@@ -224,9 +342,28 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
               provider.deleteCollection(collection.name);
               Navigator.pop(ctx);
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
             child: const Text('Delete'),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PremiumFeature extends StatelessWidget {
+  final String text;
+  const _PremiumFeature({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          const Icon(Icons.check_circle, color: Color(0xFF22C55E), size: 22),
+          const SizedBox(width: 12),
+          Text(text, style: const TextStyle(fontSize: 16)),
         ],
       ),
     );
