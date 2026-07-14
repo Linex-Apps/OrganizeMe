@@ -39,7 +39,7 @@ class OrganizeMeApp extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -58,8 +58,7 @@ class OrganizeMeApp extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           ),
-        ),
-        useMaterial3: true,
+        ), // end elevatedButtonTheme
       ),
       home: const SplashScreen(),
     );
