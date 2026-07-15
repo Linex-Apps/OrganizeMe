@@ -1,18 +1,18 @@
 /// Configuration constants for OrganizeMe premium products on Stripe.
 ///
-/// These product IDs are created and managed on the Stripe Dashboard.
-/// The prices below are placeholders — replace with real Stripe price IDs
-/// once the products are created via the Stripe CLI or Dashboard.
+/// These are the live Stripe price IDs and payment links.
 class StripeConfig {
   StripeConfig._();
 
-  /// The Stripe publishable key for the client-side SDK.
-  /// Set this via environment variable or build config.
-  static const String publishableKey = 'pk_test_xxxxxxxxxxxxxxxxxxxx';
+  /// Stripe Price IDs — live from the team's Stripe catalog.
+  static const String monthlyPriceId = 'price_1TtBGKDJeVKa6LmHyGqMfAHt';
+  static const String yearlyPriceId = 'price_1TtBGLDJeVKa6LmH2NRuu260';
 
-  /// Stripe Price IDs — replace with actual IDs from Stripe Dashboard.
-  static const String monthlyPriceId = 'price_monthly_placeholder';
-  static const String yearlyPriceId = 'price_yearly_placeholder';
+  /// Stripe payment links for checkout (no backend needed).
+  static const String monthlyPaymentLink =
+      'https://buy.stripe.com/8x29AT5rG4HGfLH3ga2Ry0e';
+  static const String yearlyPaymentLink =
+      'https://buy.stripe.com/aFa9AT07m3DCfLHcQK2Ry0f';
 
   /// Human-readable product info.
   static const String monthlyName = 'Premium Monthly';
@@ -22,8 +22,9 @@ class StripeConfig {
   static const String monthlyCurrency = 'usd';
   static const String yearlyCurrency = 'usd';
 
-  /// Returns the display string for a price, e.g. "\$2.99/month".
-  static String formatMonthly() => '\$${monthlyPrice.toStringAsFixed(2)}/month';
+  /// Returns the display string for a price, e.g. "$2.99/month".
+  static String formatMonthly() =>
+      '\$${monthlyPrice.toStringAsFixed(2)}/month';
   static String formatYearly() =>
       '\$${yearlyPrice.toStringAsFixed(2)}/year';
   static String formatMonthlyAnnual() =>

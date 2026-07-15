@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/premium_service.dart';
 import '../services/stripe_config.dart';
 
@@ -11,8 +12,17 @@ class PremiumUpsellSheet extends StatefulWidget {
 }
 
 class _PremiumUpsellSheetState extends State<PremiumUpsellSheet> {
-  final PremiumService _service = PremiumService();
   bool _isMonthly = true;
+
+  Future<void> _openCheckout() async {
+    final url = _isMonthly
+        ? StripeConfig.monthlyPaymentLink
+        : StripeConfig.yearlyPaymentLink;
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -232,18 +242,7 @@ class _PremiumUpsellSheetState extends State<PremiumUpsellSheet> {
             width: double.infinity,
             height: 52,
             child: ElevatedButton(
-              onPressed: () async {
-                final priceId = _isMonthly
-                    ? StripeConfig.monthlyPriceId
-                    : StripeConfig.yearlyPriceId;
-                final success = await _service.purchase(priceId);
-                if (success && mounted) {
-                  Navigator.pop(context, true);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Welcome to Premium! 🎉')),
-                  );
-                }
-              },
+              onPressed: _openCheckout,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFEAB308),
                 foregroundColor: Colors.black,
@@ -254,8 +253,8 @@ class _PremiumUpsellSheetState extends State<PremiumUpsellSheet> {
               ),
               child: Text(
                 _isMonthly
-                    ? 'Subscribe \$${StripeConfig.monthlyPrice.toStringAsFixed(2)}/month'
-                    : 'Subscribe \$${StripeConfig.yearlyPrice.toStringAsFixed(2)}/year',
+                    ? 'Subscribe \$2.99/month'
+                    : 'Subscribe \$19.99/year',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -270,9 +269,7 @@ class _PremiumUpsellSheetState extends State<PremiumUpsellSheet> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () async {
-                  await _service.restorePurchases();
-                },
+                onPressed: () async {},
                 child: Text(
                   'Restore Purchases',
                   style: TextStyle(
@@ -312,7 +309,7 @@ class _PremiumUpsellSheetState extends State<PremiumUpsellSheet> {
   }
 }
 
-/// Shows the premium upsell bottom sheet. Returns true if user subscribed.
+/// Shows the premium upsell bottom sheet.
 Future<bool?> showPremiumUpsell(BuildContext context) {
   return showModalBottomSheet<bool>(
     context: context,
