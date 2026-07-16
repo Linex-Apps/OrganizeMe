@@ -87,7 +87,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 // Favorites section
                 if (provider.favorites.isNotEmpty) ...[
-                  _buildSectionHeader(context, '⭐ Favorites', () {}),
+                  _buildSectionHeader(context, '⭐ Favorites', onTap: () {}),
                   const SizedBox(height: 8),
                   _buildHorizontalAppList(context, provider.favorites.take(8).toList()),
                   const SizedBox(height: 24),
@@ -95,7 +95,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                 // Recent apps section
                 if (provider.recentApps.isNotEmpty) ...[
-                  _buildSectionHeader(context, '🕐 Recently Used', () {}),
+                  _buildSectionHeader(context, '🕐 Recently Used', onTap: () {}),
                   const SizedBox(height: 8),
                   _buildHorizontalAppList(context, provider.recentApps.take(8).toList()),
                   const SizedBox(height: 24),
@@ -105,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildSectionHeader(
                   context,
                   '📁 Categories',
-                  () => Navigator.push(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const CategoriesScreen()),
                   ),
@@ -118,7 +118,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildSectionHeader(
                   context,
                   '📦 Collections',
-                  () => Navigator.push(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const CollectionsScreen()),
                   ),
@@ -129,7 +129,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                 // Unused apps section
                 if (provider.getUnusedApps(days: 30).isNotEmpty) ...[
-                  _buildSectionHeader(context, '🗑️ Unused (30+ days)', () {}),
+                  _buildSectionHeader(context, '🗑️ Unused (30+ days)', onTap: () {}),
                   const SizedBox(height: 8),
                   _buildHorizontalAppList(
                     context,
