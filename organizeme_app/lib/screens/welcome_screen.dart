@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
+import '../widgets/email_capture_widget.dart';
 import 'dashboard_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -76,9 +77,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               position: _slideAnimation,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                     Container(
                       width: 120,
                       height: 120,
@@ -190,6 +192,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         );
                       },
                     ),
+                    const SizedBox(height: 32),
+                    const EmailCaptureWidget(
+                      source: 'onboarding',
+                      title: 'Join the LinexApps Community',
+                      description:
+                          'Be the first to know about new features, tips, and sister apps.',
+                      privacyNote:
+                          'We only email about OrganizeMe and LinexApps products.',
+                      buttonText: 'Keep Me Posted',
+                    ),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
@@ -197,6 +210,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           ),
         ),
       ),
+    ),
     );
   }
 }

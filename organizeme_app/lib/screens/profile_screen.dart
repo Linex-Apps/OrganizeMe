@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
+import '../widgets/email_capture_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -58,6 +59,15 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              const SizedBox(height: 16),
+
+              // Email capture
+              const EmailCaptureWidget(
+                source: 'profile',
+                title: 'Stay in the loop',
+                description:
+                    'Get product updates, tips, and early access from LinexApps.',
               ),
               const SizedBox(height: 16),
 
