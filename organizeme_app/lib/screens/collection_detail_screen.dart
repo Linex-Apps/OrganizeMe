@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../providers/app_provider.dart';
 import '../models/collection.dart';
 import '../models/app_info.dart';
@@ -130,6 +131,15 @@ class CollectionDetailScreen extends StatelessWidget {
             provider.removeFromCollection(collection.name, app.packageName);
           },
         ),
+        onTap: () async {
+          provider.markAsOpened(app.packageName);
+          try {
+            await launchUrl(
+              Uri.parse('https://play.google.com/store/apps/details?id=${app.packageName}'),
+              mode: LaunchMode.externalApplication,
+            );
+          } catch (_) {}
+        },
       ),
     );
   }

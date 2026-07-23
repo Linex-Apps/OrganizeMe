@@ -186,6 +186,15 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
+                      'Powered by LinexApps LLC',
+                      style: TextStyle(
+                        color: theme.colorScheme.primary.withValues(alpha: 0.7),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
                       'Your phone. Finally organized.',
                       style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
                     ),

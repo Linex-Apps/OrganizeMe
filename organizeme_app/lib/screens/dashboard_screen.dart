@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../providers/app_provider.dart';
 import '../models/app_info.dart';
 import 'categories_screen.dart';
@@ -42,6 +43,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const Text(
               'OrganizeMe',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'by LinexApps',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w400,
+                color: Colors.white.withValues(alpha: 0.7),
+              ),
             ),
           ],
         ),
@@ -87,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 // Favorites section
                 if (provider.favorites.isNotEmpty) ...[
-                  _buildSectionHeader(context, '⭐ Favorites', () {}),
+                  _buildSectionHeader(context, '⭐ Favorites', onTap: () {}),
                   const SizedBox(height: 8),
                   _buildHorizontalAppList(context, provider.favorites.take(8).toList()),
                   const SizedBox(height: 24),
@@ -95,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                 // Recent apps section
                 if (provider.recentApps.isNotEmpty) ...[
-                  _buildSectionHeader(context, '🕐 Recently Used', () {}),
+                  _buildSectionHeader(context, '🕐 Recently Used', onTap: () {}),
                   const SizedBox(height: 8),
                   _buildHorizontalAppList(context, provider.recentApps.take(8).toList()),
                   const SizedBox(height: 24),
@@ -105,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildSectionHeader(
                   context,
                   '📁 Categories',
-                  () => Navigator.push(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const CategoriesScreen()),
                   ),
@@ -118,7 +127,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildSectionHeader(
                   context,
                   '📦 Collections',
-                  () => Navigator.push(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const CollectionsScreen()),
                   ),
@@ -129,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                 // Unused apps section
                 if (provider.getUnusedApps(days: 30).isNotEmpty) ...[
-                  _buildSectionHeader(context, '🗑️ Unused (30+ days)', () {}),
+                  _buildSectionHeader(context, '🗑️ Unused (30+ days)', onTap: () {}),
                   const SizedBox(height: 8),
                   _buildHorizontalAppList(
                     context,
@@ -193,7 +202,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildAppCircle(BuildContext context, AppInfo app,
       {bool isUnused = false}) {
     return GestureDetector(
-      onTap: () => context.read<AppProvider>().toggleFavorite(app.packageName),
+      onTap: () async {
+        final provider = context.read<AppProvider>();
+        provider.markAsOpened(app.packageName);
+        try {
+          await launchUrl(
+            Uri.parse(
+                'https://play.google.com/store/apps/details?id=${app.packageName}'),
+            mode: LaunchMode.externalApplication,
+          );
+        } catch (_) {}
+      },
       child: Container(
         width: 72,
         padding: const EdgeInsets.symmetric(vertical: 4),

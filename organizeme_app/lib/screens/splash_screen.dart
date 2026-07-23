@@ -65,6 +65,22 @@ class _SplashScreenState extends State<SplashScreen> {
                 letterSpacing: 0.5,
               ),
             ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Text(
+                'from LinexApps',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white70,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ),
             const SizedBox(height: 48),
             const SizedBox(
               width: 32,

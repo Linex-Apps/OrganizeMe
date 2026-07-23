@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../providers/app_provider.dart';
 import '../models/app_info.dart';
 
@@ -75,7 +76,16 @@ class CategoryDetailScreen extends StatelessWidget {
           ),
           onPressed: () => provider.toggleFavorite(app.packageName),
         ),
-        onTap: () => provider.markAsOpened(app.packageName),
+        onTap: () async {
+            provider.markAsOpened(app.packageName);
+            // Attempt to launch the app via URL scheme (Android) or URL (iOS/web)
+            try {
+              await launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=${app.packageName}'),
+                  mode: LaunchMode.externalApplication);
+            } catch (_) {
+              // App opening is optional — just track the tap
+            }
+          },
       ),
     );
   }
